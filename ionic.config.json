@@ -1,0 +1,7 @@
+{
+  "name": "capacitor-angular-17",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

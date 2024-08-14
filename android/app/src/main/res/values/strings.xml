@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">capacitor-angular-17</string>
+    <string name="title_activity_main">capacitor-angular-17</string>
+    <string name="package_name">capacitor.angular.17</string>
+    <string name="custom_url_scheme">capacitor.angular.17</string>
+</resources>
