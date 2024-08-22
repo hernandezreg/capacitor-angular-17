@@ -1,23 +1,254 @@
-<h2>Redirecting to Payment Gateway...</h2>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>OneCheckout - Payment Page - Tester</title>
+<script language="JavaScript" type="text/javascript" src="https://staging.doku.com/dateformat.js"></script>
+<script language="JavaScript" type="text/javascript" src="https://staging.doku.com/sha-1.js"></script>
 
-<form #formRedirect action="https://api-sandbox.doku.com/Suite/Receive" method="POST">
-    <input type="hidden" name="AMOUNT" value="500000.00">
-    <input type="hidden" name="BASKET" value="4296777933,500000.00,1,500000.00;">
-    <input type="hidden" name="CHAINMERCHANT" value="NA">
-    <input type="hidden" name="CURRENCY" value="360">
-    <input type="hidden" name="EMAIL" value="cwsid3_pay@mailslurp.net">
-    <input type="hidden" name="MALLID" value="6850">
-    <input type="hidden" name="MOBILEPHONE" value="6281234567899">
-    <input type="hidden" name="NAME" value="Test payment Bea">
-    <input type="hidden" name="PAYMENTCHANNEL" value="15">
-    <input type="hidden" name="PAYMETHOD" value="POST">
-    <input type="hidden" name="PURCHASEAMOUNT" value="500000.00">
-    <input type="hidden" name="PURCHASECURRENCY" value="360">
-    <input type="hidden" name="REQUESTDATETIME" value="20240802014245">
-    <input type="hidden" name="SESSIONID" value="4296777933_tr_cr_20240802022059_15">
-    <input type="hidden" name="TRANSIDMERCHANT" value="6850_4296777933_20230429">
-    <input type="hidden" name="WORDS" value="0f365b969f7cd3c925cc1531ad4a457b2183538b">
-    <input type="hidden" name="responseCode" value="0000">
-    <input type="hidden" name="WORDS" value="0f365b969f7cd3c925cc1531ad4a457b2183538b">
-    <input type="submit" value="Submit">
+<style type="text/css">
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.field_label {
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #903;
+}
+.field_input {
+	background-color: #EEE;
+}
+.bt_submit {
+	background-color: #CCC;
+	border: 2px solid #F30;
+	color: #900;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold;
+}
+
+#menu dt {
+	float:left;
+}
+#menu dt a {
+	display:block;
+	padding:10px;
+	margin:0 1px 0 1px;
+	background-color:#CCC;
+	text-decoration:none;
+	color:#000;
+	font-weight:bold;
+}
+#menu dt a:hover {
+	background-color:#09C;
+}
+</style>
+<script language="javascript" type="text/javascript">
+
+var POLICY_NUM = "4297028617"
+var AMOUNT_VALUE = "100000.00"
+var MALL_ID = "6850"
+var PRODUCT_TYPE = "tr"
+
+function getBasket() {
+	document.MerchatPaymentPage.AMOUNT.value = AMOUNT_VALUE;
+	document.MerchatPaymentPage.PURCHASEAMOUNT.value = AMOUNT_VALUE;
+	document.MerchatPaymentPage.BASKET.value = POLICY_NUM + "," + AMOUNT_VALUE + ",1," + AMOUNT_VALUE;	
+}
+
+function getRequestDateTime() {
+	document.MerchatPaymentPage.REQUESTDATETIME.value = dateTimeNow();	
+}
+
+function dateTimeNow() {
+	var now = new Date();
+
+	return dateFormat(now, "yyyymmddHHMMss");	
+}
+
+function dateNow() {
+	var now = new Date();
+
+	return dateFormat(now, "yyyymmdd");	
+}
+
+function randomString(STRlen) {
+	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+	var string_length = STRlen;
+	var randomstring = '';
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+
+	return randomstring;
+
+}
+
+function randomNumbers(STRlen) {
+	var chars = "0123456789";
+	var string_length = STRlen;
+	var randomstring = '';
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+
+	return randomstring;
+
+}
+
+function genInvoice() {	
+	document.MerchatPaymentPage.TRANSIDMERCHANT.value = MALL_ID + "_" + POLICY_NUM + "_" + dateNow() ;
+}
+
+function genSessionID() {	
+	document.MerchatPaymentPage.SESSIONID.value = POLICY_NUM + "_" + PRODUCT_TYPE + "_cr_" + dateTimeNow() + "_15";
+}
+
+function genBookingCode() {	
+	document.MerchatPaymentPage.BOOKINGCODE.value = randomString(6);
+}
+
+function getWords() {
+	document.MerchatPaymentPage.MALLID.value = MALL_ID;
+	var msg = document.MerchatPaymentPage.AMOUNT.value + MALL_ID + document.MerchatPaymentPage.SHAREDKEY.value + document.MerchatPaymentPage.TRANSIDMERCHANT.value;
+	
+	document.MerchatPaymentPage.WORDS.value = SHA1(msg);	
+}
+
+</script>
+</head>
+
+<body>
+
+<div style="clear:both"></div>
+<h1>OneCheckout - Payment Page - Tester</h1>
+<form action="https://staging.doku.com/Suite/Receive" id="MerchatPaymentPage" name="MerchatPaymentPage" method="post" >
+<table width="600" border="0" cellspacing="1" cellpadding="5">
+  <tr>
+    <td width="100" class="field_label">BASKET</td>
+    <td width="500" class="field_input"><input name="BASKET" type="text" id="BASKET" size="100" /></td>
+  </tr>
+  <tr>
+    <td width="100" class="field_label">MALLID</td>
+    <td width="500" class="field_input"><input name="MALLID" type="text" id="MALLID" size="12" /> --> Mall ID OCO</td>
+  </tr>
+  <tr>
+    <td width="100" class="field_label">CHAINMERCHANT</td>
+    <td width="500" class="field_input"><input name="CHAINMERCHANT" type="text" id="CHAINMERCHANT" value="NA" size="12" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">CURRENCY</td>
+    <td class="field_input"><input name="CURRENCY" type="text" id="CURRENCY" value="360" size="3" maxlength="3" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">PURCHASECURRENCY</td>
+    <td class="field_input"><input name="PURCHASECURRENCY" type="text" id="PURCHASECURRENCY" value="360" size="3" maxlength="3" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">AMOUNT</td>
+    <td class="field_input"><input name="AMOUNT" type="text" id="AMOUNT" size="15" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">PURCHASEAMOUNT</td>
+    <td class="field_input"><input name="PURCHASEAMOUNT" type="text" id="PURCHASEAMOUNT" size="15" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">TRANSIDMERCHANT</td>
+    <td class="field_input"><input name="TRANSIDMERCHANT" type="text" id="TRANSIDMERCHANT" size="30" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">SHAREDKEY</td>
+    <td class="field_input"><input name="SHAREDKEY" type="text" id="SHAREDKEY" value="mEHVazTHJ887" size="15" maxlength="12"/> --> Shared Key OCO</td>
+  </tr>
+  <tr>
+    <td class="field_label">WORDS</td>
+    <td class="field_input"><input type="text" id="WORDS" name="WORDS"  size="60" />&nbsp;&nbsp;<input type="button" value="Generate WORDS" onClick="getWords();">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="field_label">REQUESTDATETIME</td>
+    <td class="field_input"><input name="REQUESTDATETIME" type="text" id="REQUESTDATETIME" size="14" maxlength="14" />
+      (YYYYMMDDHHMMSS)</td>
+  </tr>
+
+  <tr>
+    <td class="field_label">SESSIONID</td>
+    <td class="field_input"><input type="text" id="SESSIONID" name="SESSIONID" size = "45x`" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">PAYMENTCHANNEL</td>
+    <td class="field_input"><input type="text" id="PAYMENTCHANNEL" name="PAYMENTCHANNEL" value="15" /> --> kosongkan jika ingin menampilkan semua merchant</td>
+  </tr>
+  <tr>
+    <td width="100" class="field_label">EMAIL</td>
+    <td width="500" class="field_input"><input name="EMAIL" type="text" id="EMAIL" value="test@doku.com" size="12" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">NAME</td>
+    <td class="field_input"><input name="NAME" type="text" id="NAME" value="test" size="30" maxlength="50" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">ADDRESS</td>
+    <td class="field_input"><input name="ADDRESS" type="text" id="ADDRESS" value="Jl. Sudirman kav 232323" size="50" maxlength="50" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">COUNTRY</td>
+    <td class="field_input"><input name="COUNTRY" type="text" id="COUNTRY" value="360" size="50" maxlength="50" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">STATE</td>
+    <td class="field_input"><input name="STATE" type="text" id="STATE" value="Jakarta" size="50" maxlength="50" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">CITY</td>
+    <td class="field_input"><input name="CITY" type="text" id="CITY" value="JAKARTA TIMUR" size="50" maxlength="50" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">PROVINCE</td>
+    <td class="field_input"><input name="PROVINCE" type="text" id="PROVINCE" value="JAKARTA" size="50" maxlength="50" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">ZIPCODE</td>
+    <td class="field_input"><input name="ZIPCODE" type="text" id="ZIPCODE" value="67153" size="6" maxlength="10" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">HOMEPHONE</td>
+    <td class="field_input"><input name="HOMEPHONE" type="text" id="HOMEPHONE" value="02123232323" size="12" maxlength="20" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">MOBILEPHONE</td>
+    <td class="field_input"><input name="MOBILEPHONE" type="text" id="MOBILEPHONE" value="0215150555" size="12" maxlength="20" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">WORKPHONE</td>
+    <td class="field_input"><input name="WORKPHONE" type="text" id="WORKPHONE" value="0215150555" size="12" maxlength="20" /></td>
+  </tr>
+  <tr>
+    <td class="field_label">BIRTHDATE</td>
+    <td class="field_input"><input name="BIRTHDATE" type="text" id="BIRTHDATE" value="19710101" size="12" maxlength="8" /></td>
+  </tr>
+  <tr>
+  	<td class="field_input" colspan="2">&nbsp;</td>
+  </tr>
+  
+</table><br /><br />
+<input name="submit" type="submit" class="bt_submit" id="submit" value="SUBMIT" />
 </form>
+<script language="javascript" type="text/javascript">
+
+getBasket();
+genInvoice();
+getWords();
+getRequestDateTime();
+genSessionID();
+
+</script>
+</body>
+</html>
+
