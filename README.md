@@ -21,3 +21,5 @@ Run `npx cap sync --inline` sync both iOS and Android.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+Test
